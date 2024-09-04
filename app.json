@@ -8,6 +8,9 @@
       "expo-router"
     ],
     "name": "project",
-    "slug": "project"
+    "slug": "project",
+    "android": {
+      "package": "com.elikai.project"
+    }
   }
 }
