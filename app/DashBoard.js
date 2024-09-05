@@ -1,78 +1,80 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import tw from 'twrnc';
-import { useNavigation } from '@react-navigation/native';
-import { Entypo } from '@expo/vector-icons';
+import { useRoute } from '@react-navigation/native';
 
-const DashBoard = () => {
-  const navigation = useNavigation();
-
-  const handleLogin = () => {
-    
-    navigation.navigate('DashBoard');
-  };
+const Dashboard = () => {
+  const route = useRoute();
+  const { username, matricNumber } = route.params || {};
 
   return (
-    <View style={tw`flex-1 bg-gray-100 items-center justify-center`}>
-      <Image
-        source={require('../images/futalogo.png')}
-        style={tw`h-40 w-50`} // Adjusted image size
-      />
-      <Text style={tw`text-2xl mb-4 font-bold text-gray-800`}>Login</Text>
-      
-      <View style={tw`w-60%`}>
-        <Text style={tw`text-sm font-medium text-gray-800`}>Username</Text>
-        <TextInput
-          placeholder="Enter your username"
-          placeholderTextColor="#666"
-          style={tw`w-full bg-white border border-gray-800 rounded-lg py-2 px-3 text-gray-800`}
-        />
-      </View>
-      
-      <View style={tw`w-60% mt-3`}>
-        <Text style={tw`text-sm font-medium text-gray-800`}>Matric Number</Text>
-        <TextInput
-          placeholder="Enter your Matric Number"
-          placeholderTextColor="#666"
-          style={tw`w-full bg-white border border-gray-800 rounded-lg py-2 px-3 text-gray-800`}
-        />
-      </View>
+    <View style={tw`flex-1 bg-indigo-900 items-center justify-center`}>
+      <View style={tw`w-full px-4`}>
+        <View style={tw`items-center mb-6`}>
+          <Image
+            source={require('../images/futalogo.png')}
+            style={tw`h-30 w-50`} // Adjusted image size
+          />
+          <Text style={tw`text-2xl text-center mb-2 font-bold text-white`}>DASHBOARD</Text>
+        </View>
 
-      <View style={tw`flex-row mt-4 justify-center`}>
-        <TouchableOpacity onPress={() => {
-          // Handle fingerprint authentication here
-          console.log('Fingerprint authentication');
-        }}>
-          <Entypo name="fingerprint" size={40} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity 
-          style={tw`bg-gray-800 px-4 py-2 rounded-md mx-2`} 
-          onPress={() => {
-            // Handle face scan authentication here
-            console.log('Face scan authentication');
-          }}
-        >
-          <Text style={tw`text-white text-lg`}>Face Scan</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={tw`w-full bg-white rounded-lg p-6 shadow-md`}>
+          <View style={tw`flex flex-col items-center mb-4`}>
+            <Image
+              style={tw`w-16 h-16 rounded-full mb-2`}
+              source={require('../images/boy.png')}
+              accessibilityLabel="User Profile"
+            />
+             <View style={tw`items-center`}>
+              <Text style={tw`text-xl font-bold text-black`}>{username || 'User'}</Text>
+              <Text style={tw`text-gray-500`}>{matricNumber || 'Matric Number'}</Text>
+            </View>
+          </View>
 
-      <View style={tw`mt-4`}>
-        <Text style={tw`text-red-600 text-center`}>
-          You're not eligible to login.
-        </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-          <Text style={tw`text-indigo-800 text-center`}>Kindly register</Text>
-        </TouchableOpacity>
-      </View>
+          <View>
+            <Text style={tw`text-xl text-center font-semibold text-black mb-4`}>Select Courses for Exams</Text>
+            <View style={tw`flex flex-row flex-wrap justify-between`}>
+              <TouchableOpacity style={tw`bg-gray-300 p-4 rounded-lg w-[48%] items-center mb-4`}>
+                <Image
+                  source={require('../images/exam.png')}
+                  style={tw`h-6 w-6 mb-2`}
+                  accessibilityLabel="CPE 510 syllabus icon"
+                />
+                <Text style={tw`text-gray-700`}>CPE 510</Text>
+              </TouchableOpacity>
 
-      <TouchableOpacity 
-        style={tw`bg-gray-800 px-4 py-2 rounded-md mt-6`} 
-        onPress={() => navigation.navigate('DashBoard')}
-      >
-        <Text style={tw`text-white text-lg`}>Login</Text>
-      </TouchableOpacity>
+              <TouchableOpacity style={tw`bg-gray-300 p-4 rounded-lg w-[48%] items-center mb-4`}>
+                <Image
+                  source={require('../images/exam.png')}
+                  style={tw`h-6 w-6 mb-2`}
+                  accessibilityLabel="CPE 522 syllabus icon"
+                />
+                <Text style={tw`text-gray-700`}>CPE 522</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={tw`bg-gray-300 p-4 rounded-lg w-[48%] items-center mb-4`}>
+                <Image
+                   source={require('../images/exam.png')}
+                   style={tw`h-6 w-6 mb-2`}
+                  accessibilityLabel="CPE 502 syllabus icon"
+                />
+                <Text style={tw`text-gray-700`}>CPE 502</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={tw`bg-gray-300 p-4 rounded-lg w-[48%] items-center mb-4`}>
+                <Image
+                   source={require('../images/exam.png')}
+                   style={tw`h-6 w-6 mb-2`}
+                  accessibilityLabel="CPE 512 syllabus icon"
+                />
+                <Text style={tw`text-gray-700`}>CPE 512</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
 
-export default DashBoard;
+export default Dashboard;

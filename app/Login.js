@@ -12,6 +12,7 @@ const Login = () => {
   const [matricNumber, setMatricNumber] = useState('');
   const [isFingerprintScanned, setIsFingerprintScanned] = useState(false);
   const [fingerprintHash, setFingerprintHash] = useState('');
+  const [loginFailed, setLoginFailed] = useState(false);
   const navigation = useNavigation();
 
   const handleFingerprintScan = async () => {
@@ -46,10 +47,9 @@ const Login = () => {
 
   const handleLogin = async () => {
     console.log("Login attempt with:", {
-     username,
+      username,
       matricNumber,
       fingerprintHash,
-      
     });
   
     if (username && matricNumber && fingerprintHash) {
@@ -61,17 +61,20 @@ const Login = () => {
           .eq('matricnumber', matricNumber)
           .eq('fingerprintHash', fingerprintHash);
   
-        // This logs the response from Supabase
         console.log("Supabase response:", { data, error });
   
         if (error) {
           console.error("Supabase error:", error.message);
           Alert.alert('Error', "An error occurred while trying to login.");
         } else if (data.length === 0) {
-          Alert.alert('Error', "No matching record found. Please check your credentials or register.");
+          setLoginFailed(true); // Show error message if no matching record is found
         } else {
-          // Handle successful login
-          navigation.navigate('DashBoard');
+          setLoginFailed(false);
+          // Pass username and matric number to the Dashboard
+          navigation.navigate('DashBoard', {
+            username: data[0].username,
+            matricNumber: data[0].matricnumber,
+          });
         }
       } catch (err) {
         console.log('Login Error:', err);
@@ -135,18 +138,18 @@ const Login = () => {
         <Text style={tw`text-white text-lg`}>Login</Text>
       </TouchableOpacity>
 
-      <View style={tw`mt-4`}>
-        <Text style={tw`text-red-600 text-center`}>
-          You're not eligible to login.
-        </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-          <Text style={tw`text-indigo-800 text-center`}>Kindly register</Text>
-        </TouchableOpacity>
-      </View>
+      {loginFailed && (
+        <View style={tw`mt-4`}>
+          <Text style={tw`text-red-600 text-center`}>
+            You're not eligible to login.
+          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+            <Text style={tw`text-indigo-800 text-center`}>Kindly register</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
 
 export default Login;
-
-

@@ -11,6 +11,14 @@
     "slug": "project",
     "android": {
       "package": "com.elikai.project"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "1f7faf06-592f-4aa4-9816-ca67751c46ef"
+      }
     }
   }
 }
